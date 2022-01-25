@@ -4,9 +4,9 @@ package code.service;
 import code.model.Staff;
 import code.repository.StaffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 @Repository
@@ -17,10 +17,22 @@ public class StaffService implements IStaffService {
 
 
 
+//    @Override
+//    public List<Staff> findAll() {
+//        return (List<Staff>) staffRepo.findAll();
+//    }
+
+
     @Override
-    public List<Staff> findAll() {
-        return (List<Staff>) staffRepo.findAll();
+    public Page<Staff> findAllByNameStaffContaining(String nameStaff, Pageable pageable) {
+        return staffRepo.findAllByNameStaffContaining(nameStaff, pageable);
     }
+
+    @Override
+    public Page<Staff> findAll(Pageable pageable) {
+        return staffRepo.findAll(pageable);
+    }
+
 
     @Override
     public void save(Staff staff) {
@@ -33,7 +45,23 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Staff findById(int id) {
-        return staffRepo.findById(id).get();
+    public Staff findById(int idStaff) {
+        return staffRepo.findById(idStaff).get();
     }
+
+    @Override
+    public boolean countImg(String img) {
+        int count =0;
+        for (Staff s:staffRepo.findAll()) {
+            if(img.equals(s.getImgStaff())){
+                count++;
+        }
+    }
+        if(count > 1){
+            return false;
+        }
+        return true;
+    }
+
+
 }

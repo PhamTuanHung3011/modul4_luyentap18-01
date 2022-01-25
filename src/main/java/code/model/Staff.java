@@ -2,48 +2,59 @@ package code.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Staff {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int idStaff;
-    private String CodeStaff;
+
+    @Size(min = 4, max = 8, message = "CodeStaff min la 4, max la 8")
+    private String codeStaff;
+
+    @NotEmpty(message = "Ten khong duoc de trong")
     private String nameStaff;
+
+    @Min(value = 18, message = "Tuoi tu 20 den 60")
+    @Max(value = 60 , message = "Tuoi tu 20 den 60")
     private int ageStaff;
+
     private double salaryStaff;
+    private String imgStaff;
 
     @ManyToOne
     private Branch branch;
 
     public Staff() {
-
     }
 
-    public Staff(int idStaff, String codeStaff, String nameStaff, int ageStaff, double salaryStaff, Branch branch) {
-        this.idStaff = idStaff;
-        CodeStaff = codeStaff;
+    public Staff(String codeStaff, String nameStaff, int ageStaff, double salaryStaff, String imgStaff, Branch branch) {
+        this.codeStaff = codeStaff;
         this.nameStaff = nameStaff;
         this.ageStaff = ageStaff;
         this.salaryStaff = salaryStaff;
+        this.imgStaff = imgStaff;
         this.branch = branch;
     }
 
-    public Staff(String codeStaff, String nameStaff, int ageStaff, double salaryStaff, Branch branch) {
-        CodeStaff = codeStaff;
-        this.nameStaff = nameStaff;
-        this.ageStaff = ageStaff;
-        this.salaryStaff = salaryStaff;
-        this.branch = branch;
+    public String getImgStaff() {
+        return imgStaff;
     }
 
+    public void setImgStaff(String imgStaff) {
+        this.imgStaff = imgStaff;
+    }
 
     public String getCodeStaff() {
-        return CodeStaff;
+        return codeStaff;
     }
 
     public void setCodeStaff(String codeStaff) {
-        CodeStaff = codeStaff;
+        this.codeStaff = codeStaff;
     }
 
     public int getIdStaff() {
